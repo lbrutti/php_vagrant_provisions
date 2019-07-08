@@ -22,6 +22,11 @@ a2enmod rewrite
 
 #install unzip
 apt-get install unzip
+
+if [ -d /vagrant/wordpress ]; then
+  echo "Wordpress already installed" 
+fi
+
 #install latest wp
 if  [ ! -d /vagrant/wordpress ]; then
   echo "Wordpress missing, I'll try to download it"
@@ -36,9 +41,7 @@ if  [ ! -d /vagrant/wordpress ]; then
   echo "restarting apache"
   service apache2 restart
 fi
-if [ -d /vagrant/wordpress ]; then
-  echo "Wordpress already installed" 
-fi
+
 
 #link wordpress folder to var/www
 if ! [ -L /var/www ]; then
