@@ -17,7 +17,16 @@ apt-get install -y mariadb-server
 
 apt-get install -y apache2
 
+#enable url rewrite module:
+sudo a2enmod rewrite
+
+#install lates wp
+curl -O http://wordpress.org/latest.zip
+unzip latest.zip 
+mv wordpress /vagrant
+rm latest.zip 
+
 if ! [ -L /var/www ]; then
   rm -rf /var/www
-  ln -fs /vagrant /var/www
+  ln -fs /vagrant/wordpress /var/www
 fi
