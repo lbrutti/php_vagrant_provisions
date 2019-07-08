@@ -26,6 +26,11 @@ unzip latest.zip
 mv wordpress /vagrant
 rm latest.zip 
 
+#copy wp ready conf files:
+cp -f /vagrant/conf/apache2.conf /etc/apache2/
+cp -f /vagrant/conf/apache2.conf /etc/apache2/sites-enabled/
+
+#link wordpress folder to var/www
 if ! [ -L /var/www ]; then
   rm -rf /var/www
   ln -fs /vagrant/wordpress /var/www
