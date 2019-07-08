@@ -24,21 +24,21 @@ a2enmod rewrite
 apt-get install unzip
 #install latest wp
 if  [ ! -d /vagrant/wordpress ]; then
+  echo "Wordpress missing, I'll try to download it"
   curl -O -s https://wordpress.org/latest.zip
   unzip latest.zip 
   mv wordpress /vagrant
   rm latest.zip 
   #copy wp ready conf files:
+  echo "copy apache conf files"
   cp -f /vagrant/conf/apache2.conf /etc/apache2/
   cp -f /vagrant/conf/000-default.conf /etc/apache2/sites-enabled/ 
+  echo "restarting apache"
   service apache2 restart
 fi
 if [ -d /vagrant/wordpress ]; then
   echo "Wordpress already installed" 
 fi
-
-
-
 
 #link wordpress folder to var/www
 if ! [ -L /var/www ]; then
