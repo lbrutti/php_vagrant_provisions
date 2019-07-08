@@ -18,17 +18,27 @@ apt-get install -y mariadb-server
 apt-get install -y apache2
 
 #enable url rewrite module:
-sudo a2enmod rewrite
+a2enmod rewrite
 
-#install lates wp
-curl -O http://wordpress.org/latest.zip
-unzip latest.zip 
-mv wordpress /vagrant
-rm latest.zip 
+#install unzip
+apt-get install unzip
+#install latest wp
+if  [ ! -d /vagrant/wordpress ]; then
+  curl -O -s https://wordpress.org/latest.zip
+  unzip latest.zip 
+  mv wordpress /vagrant
+  rm latest.zip 
+  #copy wp ready conf files:
+  cp -f /vagrant/conf/apache2.conf /etc/apache2/
+  cp -f /vagrant/conf/000-default.conf /etc/apache2/sites-enabled/ 
+  service apache2 restart
+fi
+if [ -d /vagrant/wordpress ]; then
+  echo "Wordpress already installed" 
+fi
 
-#copy wp ready conf files:
-cp -f /vagrant/conf/apache2.conf /etc/apache2/
-cp -f /vagrant/conf/apache2.conf /etc/apache2/sites-enabled/
+
+
 
 #link wordpress folder to var/www
 if ! [ -L /var/www ]; then
